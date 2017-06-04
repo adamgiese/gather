@@ -4,6 +4,8 @@ var io = require('socket.io')(server);
 
 server.listen(80);
 
+app.use('/static', express.static('dist'))
+
 app.get('/', function (req, res) {
     res.sendfile(__dirname + '/index.html');
 });
