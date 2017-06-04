@@ -12,8 +12,9 @@ app.get('/', function (req, res) {
 });
 
 io.on('connection', function (socket) {
-    socket.emit('news', { hello: 'world' });
-    socket.on('my other event', function (data) {
-        console.log(data);
+    io.clients((error, clients) => {
+        console.log(clients);
+        // if other people, get state, and emit it back
+        // else return null (or something)
     });
 });

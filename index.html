@@ -12,9 +12,7 @@
     <script src="/static/index.js"></script>
     <script>
       var socket = io('http://104.236.11.41');
-      socket.on('news', function (data) {
-        console.log(data);
-        socket.emit('my other event', { my: 'data' });
+      socket.on('initialState', function (data) {
       });
     </script>
   </body>
