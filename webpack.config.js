@@ -3,7 +3,13 @@ const webpack = require("webpack")
 
 module.exports = {
     entry: {
-        script: path.resolve(__dirname, "./src/index.js")
+        index: path.resolve(__dirname, "./src/index.js"),
+        vendor: [
+            'react',
+            'react-dom',
+            'react-redux',
+            'redux',
+        ]
     },
 
     module: {
@@ -11,22 +17,22 @@ module.exports = {
             {
                 test: /\.js$/,
                 use: "babel-loader",
-                exclude: /(\/node_modules\/|\.spec\.js$)/
+                exclude: /(\/node_modules\/|\.spec\.js$)/,
             }
         ]
     },
 
     output: {
         path: __dirname + "/dist",
-        filename: "index.js",
-        pathinfo: true
+        filename: "[name].js",
+        pathinfo: true,
     },
 
     resolve: {
         extensions: [".js"],
         modules: [
             __dirname,
-            path.resolve(__dirname, "./node_modules")
+            path.resolve(__dirname, "./node_modules"),
         ]
     }
 }
