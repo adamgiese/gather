@@ -5,11 +5,15 @@ import { createStore } from 'redux'
 
 import reducer from './reducers';
 
-const App = ({name, setName, increment}) => {
+const App = ({name, counter, setName, increment}) => {
     if (name === null) {
         return <NameForm handleSubmit={setName} />
     } else {
-        return <h1>{'Hello ' + name}</h1>
+        return <div>
+            <h1>{'Hello ' + name}</h1>
+            <h1>{counter}</h1>
+            <button onClick={increment}>+1</button>
+        </div>
     }
 }
 
@@ -47,14 +51,14 @@ class NameForm extends React.Component {
 const mapStateToProps = (state) => {
     return {
         name: state.name,
+        counter: state.counter,
     }
 }
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        setName: (name) => {
-            dispatch({type: 'SET_NAME', name})
-        }
+        setName: (name) => dispatch({type: 'SET_NAME', name}),
+        increment: () => dispatch({type: 'INCREMENT'}),
     }
 }
 
