@@ -1,10 +1,15 @@
 import { assert } from 'chai'
-import reducer from './reducers'
+import { counterReducer } from './reducers'
 
-describe('reducer', () => {
-    it('should increment on INCREMENT', () => {
+describe('counterReducer', () => {
+    it('increments on INCREMENT', () => {
         const initialState = {counter: 1};
         const action = {type: 'INCREMENT'};
-        assert.equal(reducer(initialState, action).counter, 2);
+        assert.equal(counterReducer(initialState, action).counter, 2);
+    });
+    it('swaps the full state on SWAP_STATE', () => {
+        const initialState = {counter: 1};
+        const action = {type: 'SWAP_STATE', state: {a: 4}};
+        assert.deepEqual(counterReducer(initialState, action), {a: 4});
     });
 });

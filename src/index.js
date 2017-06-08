@@ -50,8 +50,8 @@ class NameForm extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        name: state.name,
-        counter: state.counter,
+        name: state.player.name,
+        counter: state.game.counter,
     }
 }
 
