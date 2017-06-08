@@ -13,8 +13,18 @@ app.get('/', (req, res) => {
 
 io.on('connection', (socket) => {
     io.clients((error, clients) => {
-        console.log(clients)
-        // if other people, get state, and emit it back
-        // else return null (or something)
+        if (clients.length === 1) {
+            socket.emit('new-game');
+        } else {
+            // TODO: figure out how to get another person's state back to the
+            // newly connected socket (not working right now bc socket.io does
+            // not allow "acknowledgement" functions on broadcasts).
+            socket.to(clients[0]).emit('request-game', (gameState) => {
+                socket.emit('existing-game', gameState);
+            });
+        }
     })
+    socket.on('game-action', (action) => {
+        socket.broadcast.emit('game-action', action);
+    });
 })
