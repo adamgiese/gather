@@ -2,6 +2,8 @@ const path = require("path")
 const webpack = require("webpack")
 
 module.exports = {
+    devtool: 'inline-source-map',
+
     entry: {
         index: path.resolve(__dirname, "./src/index.js"),
         vendor: [
@@ -17,7 +19,7 @@ module.exports = {
             {
                 test: /\.js$/,
                 use: "babel-loader",
-                exclude: /(\/node_modules\/|\.spec\.js$)/,
+                exclude: /(\/node_modules)/,
             }
         ]
     },

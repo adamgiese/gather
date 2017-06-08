@@ -1,32 +1,34 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { Provider, connect } from 'react-redux';
-import { createStore } from 'redux';
+import React from 'react'
+import ReactDOM from 'react-dom'
+import { Provider, connect } from 'react-redux'
+import { createStore } from 'redux'
 
-const App = ({name, setName}) => {
+import reducer from './reducers';
+
+const App = ({name, setName, increment}) => {
     if (name === null) {
         return <NameForm handleSubmit={setName} />
     } else {
-        return <h1>{'Hello ' + name}</h1>;
+        return <h1>{'Hello ' + name}</h1>
     }
 }
 
 class NameForm extends React.Component {
   constructor(props) {
-    super(props);
-    this.state = {value: ''};
+    super(props)
+    this.state = {value: ''}
 
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleChange = this.handleChange.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
   }
 
   handleChange(event) {
-    this.setState({value: event.target.value});
+    this.setState({value: event.target.value})
   }
 
   handleSubmit(event) {
-    this.props.handleSubmit(this.state.value);
-    event.preventDefault();
+    this.props.handleSubmit(this.state.value)
+    event.preventDefault()
   }
 
   render() {
@@ -38,7 +40,7 @@ class NameForm extends React.Component {
         </label>
         <input type="submit" value="Submit" />
       </form>
-    );
+    )
   }
 }
 
@@ -61,25 +63,11 @@ const AppContainer = connect(
     mapDispatchToProps
 )(App)
 
-
-const initialState = {
-    name: null,
-};
-
-function reducer(state = initialState, action) {
-    switch (action.type) {
-        case 'SET_NAME':
-            return Object.assign({}, state, {name: action.name});
-        default:
-            return state;
-    }
-}
-
-let store = createStore(reducer);
+const store = createStore(reducer)
 
 ReactDOM.render(
     <Provider store={store}>
         <AppContainer />
     </Provider>,
     document.getElementById('react')
-);
+)
