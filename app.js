@@ -11,20 +11,24 @@ app.get('/', (req, res) => {
     res.sendfile(__dirname + '/index.html')
 })
 
-io.on('connection', (socket) => {
+const connectionListener = (socket) => {
     io.clients((error, clients) => {
         if (clients.length === 1) {
             socket.emit('new-game');
         } else {
-            // TODO: figure out how to get another person's state back to the
-            // newly connected socket (not working right now bc socket.io does
-            // not allow "acknowledgement" functions on broadcasts).
-            socket.to(clients[0]).emit('request-game', (gameState) => {
-                socket.emit('existing-game', gameState);
-            });
+            const leaderSocketId = clients[0]
+            socket.to(leaderSocketId).emit('request-game');
         }
     })
+
     socket.on('game-action', (action) => {
-        socket.broadcast.emit('game-action', action);
+        const taggedAction = Object.assign({}, action, {from: socket.id}); 
+        socket.broadcast.emit('game-action', taggedAction);
     });
-})
+
+    socket.on('game-state', (gameState) => {
+        socket.broadcast.emit('game-state', gameState);
+    });
+}
+
+io.on('connection', connectionListener)

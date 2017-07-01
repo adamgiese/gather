@@ -2,15 +2,15 @@ import React from 'react'
 import { connect } from 'react-redux'
 
 const Game = ({counter, increment}) => {
-    <div>
+    return ( <div>
         <h1>{counter}</h1>
         <button onClick={increment}>+1</button>
-    </div>
+    </div>)
 }
 
 const mapStateToProps = (state) => {
     return {
-        counter: state.game.counter,
+        counter: state.counter,
     }
 }
 

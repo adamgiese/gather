@@ -25,8 +25,8 @@ const App = ({name, status, setName}) => {
 
 const mapStateToProps = (state) => {
     return {
-        name: state.player.name,
-        status: state.player.status,
+        name: state.name,
+        status: state.status,
     }
 }
 
